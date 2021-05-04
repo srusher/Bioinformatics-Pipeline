@@ -43,7 +43,7 @@ ff report.html
 
 #########################################################################################
 
-# Moving on to Gene Annotation
+# Moving on to Gene Prediction and Annotation
 
 echo -e "\nGene Annotation Initializing...\n...\n"
 cd ~/BIFS619/Bthuringiensis/02_annotations
@@ -58,15 +58,23 @@ prodigal -i scaffolds.fasta \
 echo "Running Glimmer..."
 tigr-glimmer long-orfs -n -t 1.15 scaffolds.fasta glimmer.longorf
 
+# creating the training set for long ORFs
 tigr-glimmer extract -t scaffolds.fasta glimmer.longorfs > glimmer.train
 
+# fitting an HMM model to our training data
 tigr-glimmer build-icm -r glimmer.icm < glimmer.train
 
+# predicting genes using the HMM model that was just created
 tigr-glimmer glimmer3 -o50 -g110 -t30 scaffolds.fasta glimmer.icm glimmer
 
 echo "Running Barrnap..."
 barrnap --threads 4 --kingdom bac scaffolds.fasta > rrna.gff
 
+conda init bash
+
+conda activate prokka_env
+
+prokka scaffolds.fasta
 
 #########################################################################################
 
@@ -168,7 +176,7 @@ wget https://culture-bioinformatics.org/UMGC/BIFS619/SRR2093871_2.fastq.gz
 echo "Decompressing .gz files..."
 gunzip *.gz
 
-echo "Retrieving FASTA files..."
+echo "Retrieving our reference genome FASTA file..."
 wget https://culture-bioinformatics.org/UMGC/BIFS619/Bthuringiensis.fasta
 
 echo "Mapping the first file..."
