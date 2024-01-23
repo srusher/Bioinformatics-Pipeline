@@ -43,13 +43,14 @@ ff report.html
 
 #########################################################################################
 
-# Moving on to Gene Prediction and Annotation
+# Moving on to Gene Prediction
 
 echo -e "\nGene Annotation Initializing...\n...\n"
 cd ~/BIFS619/Bthuringiensis/02_annotations
 
 cp ~/BIFS619/Bthuringiensis/01_spades/assembly/scaffolds.fasta .
 
+# Prokaryotic, protein-coding gene prediction with prodigal
 echo "Running Prodigal..."
 prodigal -i scaffolds.fasta \
 -o prodigal.out -s prodigal_table.out -f gff -d prodigal_geneseqs.out \
