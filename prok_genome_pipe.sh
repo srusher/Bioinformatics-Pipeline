@@ -43,7 +43,7 @@ ff report.html
 
 #########################################################################################
 
-# Moving on to Gene Prediction
+# Moving on to Gene Prediction and Annotation
 
 echo -e "\nGene Annotation Initializing...\n...\n"
 cd ~/BIFS619/Bthuringiensis/02_annotations
@@ -68,6 +68,7 @@ tigr-glimmer build-icm -r glimmer.icm < glimmer.train
 # predicting genes using the HMM model that was just created
 tigr-glimmer glimmer3 -o50 -g110 -t30 scaffolds.fasta glimmer.icm glimmer
 
+# Using Barrnap to predict the location of ribosomal RNA genes
 echo "Running Barrnap..."
 barrnap --threads 4 --kingdom bac scaffolds.fasta > rrna.gff
 
